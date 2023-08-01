@@ -1,26 +1,19 @@
 /*
-7) “IMPICCATO” [MOLTO DIFFICILE]
+"HANGMAN" [VERY DIFFICULT]
 
-Replicare il gioco dell’impiccato.
-Fare un ciclo infinito dove, inizialmente, si chiede un input dallo stdin all’utente.
-L’utente può inserire tre numeri ---> 1 (inizia partita) 2(inserisci parola) 3(concludi)
-se l’utente digita 2 deve essere in grado di inserire una parola da indovinare.
-Ciò vuol dire che dovete essere in grado di salvare tutte le parole inserite dall’utente dinamicamente (ne può inserire 
-finchè c’è memoria disponibile dopodichè avvisate che non c’è più memoria). se preme 1 avviate il gioco. A quel punto il 
-vostro codice dovrà scegliere randomicamente una parola tra quelle inserite dall’utente in precedenza (vi consiglio di 
-associare ad ogni parola un numero) e , successivamente, mostrare sullo stdout la parola nascosta, ovvero:
+Replicate the hangman game.
+Create an infinite loop where, initially, you ask for an input from the stdin to the user.
+The user can enter three numbers ---> 1 (start game) 2 (enter word) 3 (end game)
+If the user inputs 2, they should be able to enter a word to guess.
+This means you have to be able to dynamically save all the words entered by the user (they can enter words until there's available memory, after which you should notify that there's no more memory). If they press 1, start the game. At that point, your code should randomly choose a word among those entered by the user previously (I recommend associating a number with each word) and then display the hidden word on the stdout, like this:
 
-se la parola generata randomicamente è  “palla” dovete stampare  - + - - +
-a quel punto dovete chiedere all’utente di inserire una lettera  (mi raccomando solo una , altrimenti è un casino). se 
-inserisce una lettera giusta dovete aggiornare la stringa nascosta
-ovvero: Nel caso inserisca la p  stampate p + - - +
-L’utente ha al massimo 4 vite, se inserisce una lettera non presente stampate “La lettera non è presente” e togliere una 
-vita. Se l’utente indovina la parola o finisce le vite concludere la partita e tornare al menu. Finchè l’utente non digita 
-3 il programma non deve terminare.
+If the randomly generated word is "ball," you should print - + - - +
+Then, you should ask the user to enter a letter (remember, only one letter, otherwise, it becomes a mess). If they enter a correct letter, you should update the hidden string as follows:
 
+If they enter 'b,' print b + - - +
+The user has a maximum of 4 lives, if they enter a letter that is not present, print "The letter is not present" and deduct a life. If the user guesses the word or runs out of lives, end the game and return to the menu. The program should not terminate until the user inputs 3.
 */
 
-///*
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
@@ -28,7 +21,7 @@ vita. Se l’utente indovina la parola o finisce le vite concludere la partita e t
 
 void draw(x) {
 
-	printf("Hai perso una vita!\n");
+	printf("You lost an hp!\n");
 
 	printf("\n");
 
@@ -77,7 +70,7 @@ void onetwothree(int *x) {
 			break;
 		}
 	} while (*x != 1 && *x != 2 && *x != 3);
-	printf("So... You have choesen %d\n", *x);
+	printf("So... You have chosen %d\n", *x);
 }
 
 void crypt(const char *word, char *word2) {
@@ -97,7 +90,6 @@ void crypt(const char *word, char *word2) {
 }
 
 int main(void) {
-
 	int x = 0;
 	int flag;
 	char word[30] = { NULL };
@@ -107,43 +99,34 @@ int main(void) {
 	int lives;
 menu:
 	lives = 4;
-	printf("1 -> Inizia partita \n2 -> Inserisci parola \n3 -> Concludi\n");
+	printf("1 -> Start game \n2 -> Insert word \n3 -> Close\n");
 	onetwothree(&x);
 
-	
 	while (x == 2) {
-
-		printf("Inserire parola (Deve contenere massimo 30 caratteri):\n");
-		
+		printf("Insert word (Max 30 characters):\n");
 
 		flag = fscanf(stdin, "%s", &word);
 
-		printf("La parola scelta e': %s\n", word);
-
-		printf("1 -> Inizia partita \t 2 -> Inserisci parola \t 3 -> Concludi\n");
-
+		printf("The chosen word is: %s\n", word);
+		printf("1 -> Start game \t 2 -> Insert word \t 3 -> Close\n");
 
 		onetwothree(&x);
-
 	}
 	
 	if (x == 1) {
-
 		int len = strlen(word);
 
 		if (word == NULL || len == 0) {
-			printf("Devi scegliere una parola prima di iniziare.\n");
+			printf("Choose a word to start.\n");
 			goto menu;
 		}
 		
 			crypt(&word, &word2);
-		
-
 
 		while (1) {
-			printf("Parola:\t%s\n", word2);
+			printf("Word:\t%s\n", word2);
 
-			printf("Inserire una lettera (Mi raccomando solo una, altrimenti e' un casino)\n");
+			printf("Insert a letter (Just one or it will mess everything up)\n");
 
 			flag = scanf("%s", &var);
 
@@ -180,4 +163,3 @@ menu:
 		
 	return 0;
 }
-//*/
